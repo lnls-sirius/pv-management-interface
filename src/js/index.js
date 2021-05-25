@@ -42,7 +42,7 @@ $("#applyPVchanges").on("click", async function() {
     if ($("#PVold").val().indexOf(",") >= 0) {
         oldpvs = [...new Set($("#PVold").val().replace(/\s/g, "").split(","))].filter(filterEmpty);
     } else {
-        oldpvs = [...new Set($("#PVold").val().replace(/ /g, "").split(/\r?\n/))].filter(filterEmpty);
+        oldpvs = [...new Set($("#PVold").val().replace(/[ \t\r]/g, "").split(/\r?\n/))].filter(filterEmpty);
     }
 
     let operation = $("#action")[0].value;

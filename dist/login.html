@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>PV Management Interface | Login</title>
+</head>
+
+<body>
+    <ul class="navbar">
+        <li><a href="index.html">PV Operations</a></li>
+        <li><a href="help.html">Help</a></li>
+        <li class="right"><a class="log" id="log" href="#">Log in</a></li>
+        <li class="right">
+            <p id="username">You are currently not logged in.</p>
+        </li>
+    </ul>
+    <div class="center">
+        <h1>Login</h1>
+        <div class="form-inline">
+            <label for="user">Username:</label>
+            <input id="user" placeholder="Enter email">
+            <label for="pass">Password:</label>
+            <input type="password" id="pass" placeholder="Enter password">
+            <button id="login">Login</button>
+        </div>
+        <div class="message" id="message"></div>
+        <footer>PV Management interface. For queries, email <a href="mailto:guilherme.freitas@lnls.br">guilherme.freitas@lnls.br</a></footer>
+</body>
+<script src="main.js"></script>
+
+</html>
