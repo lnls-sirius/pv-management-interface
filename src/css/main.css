@@ -1,0 +1,456 @@
+body {
+    margin: 0;
+    background-color: #f5f7ff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #162564;
+    -webkit-box-shadow: 0 6px 8px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 6px 8px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 6px 8px -3px rgba(0, 0, 0, 0.75);
+}
+
+ul.navbar li {
+    float: left;
+}
+
+ul.navbar li a,
+ul.navbar li p {
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.navbar li p {
+    margin: 0;
+}
+
+ul.navbar li a:hover:not(.log) {
+    background-color: #253a92;
+}
+
+.log {
+    background-color: #eea300;
+}
+
+.log:hover {
+    background-color: #ffc953;
+}
+
+ul.navbar .right {
+    float: right;
+}
+
+.editArea {
+    display: inline-block;
+    width: 48%;
+    padding: 1%;
+}
+
+.optionsBar {
+    display: block;
+}
+
+.optionsBar .importButton {
+    float: right;
+    background-color: #dddddd;
+    border-radius: 0.2em;
+}
+
+.optionsBar .lds-ellipsis {
+    float: right;
+}
+
+textarea {
+    flex-basis: 100%;
+    resize: none;
+}
+
+.pvTextArea {
+    display: flex;
+    margin: 1vh 0;
+    height: 50vh;
+    width: 100%
+}
+
+.helpArea {
+    display: inline-block;
+    vertical-align: top;
+    width: 47%;
+    padding: 1%;
+}
+
+.helpArea p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+h2,
+.helpArea p,
+.darkGrey,
+.editArea select,
+.editArea label,
+.editArea input,
+.editArea p {
+    color: #363636;
+}
+
+.optionsBar select {
+    width: auto;
+}
+
+.arrow {
+    margin: 0.8em 0.6em 0.6em 0.6em;
+    float: right;
+    border: solid #ffffff;
+    border-width: 0 3px 3px 0;
+    display: block;
+    padding: 3px;
+    transform: rotate(225deg);
+}
+
+.up {
+    margin-top: 0.6em;
+    transform: rotate(45deg);
+}
+
+.divider {
+    vertical-align: top;
+    ;
+    display: inline-block;
+    border-left: 1px solid #38546d;
+    background: #afafaf;
+    width: 1px;
+    margin-top: 2%;
+    height: 85%
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.dropdown {
+    margin-top: 1em;
+    border-radius: 0.2em;
+    background-color: #253a92;
+}
+
+.dropdown .title {
+    display: inline-block;
+    margin: 0.1em;
+    height: 1.2em;
+    color: #ffffff;
+}
+
+.optionsDropdown {
+    background-color: #f2f2f2;
+    border-radius: 0 0 0.2em 0.2em;
+    padding: 0.3em;
+}
+
+.optionsDropdown .option {
+    width: 48%;
+    display: inline-block;
+}
+
+.optionsDropdown .option:last-child {
+    text-align: right;
+}
+
+.optionsDropdown input[type="number"] {
+    width: 20%;
+}
+
+.message,
+footer {
+    width: 100%;
+    position: fixed;
+    color: #ffffff;
+    text-align: center;
+}
+
+.message {
+    bottom: 28px;
+    display: none;
+    background-color: #eea300;
+    height: 5vh;
+    font-size: 3vh;
+    line-height: 5vh;
+}
+
+footer {
+    bottom: 0;
+    background-color: #162564;
+    height: 28px;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+footer a {
+    color: #afafaf;
+}
+
+h1,
+table {
+    margin: 1vh 0;
+}
+
+.table-container {
+    height: 60vh;
+}
+
+table {
+    display: flex;
+    flex-flow: column;
+    margin: 1vh 0;
+    height: calc(51vh + 35px);
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fcfcfc;
+}
+
+table thead {
+    flex: 0 0 auto;
+    width: calc(100% - 0.9em);
+}
+
+table tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+table tbody tr {
+    width: 100%;
+    cursor: pointer;
+}
+
+table thead,
+table tbody tr {
+    display: table;
+    table-layout: fixed;
+}
+
+th:nth-of-type(1),
+td:nth-of-type(1) {
+    width: 30%;
+}
+
+th:nth-of-type(4),
+td:nth-of-type(4) {
+    width: 25%;
+}
+
+th {
+    font-size: 1vw;
+    color: #ffffff;
+    background-color: #253a92;
+}
+
+td,
+th {
+    word-wrap: break-word;
+    border: 1px solid #dddddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #dddddd;
+}
+
+.progress {
+    display: inline;
+}
+
+.lds-ellipsis {
+    display: none;
+    position: relative;
+    width: 80px;
+    top: 10px;
+}
+
+.lds-ellipsis div {
+    position: absolute;
+    top: 0;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #253a92;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .importButton {
+        width: 45%;
+    }
+
+    th {
+        font-size: 0.8em;
+    }
+}
+
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    width: 20%;
+    flex-direction: column;
+    align-items: stretch;
+    margin: auto;
+}
+
+.form-inline label {
+    margin: 5px 1px 5px 0;
+}
+
+.form-inline input {
+    vertical-align: middle;
+    margin: 5px 1px 5px 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #65b2ff;
+    color: #ffffff;
+    border-radius: 10px;
+    cursor: progress;
+}
+
+button:enabled {
+    background-color: #3399ff;
+    cursor: pointer;
+}
+
+button:enabled:hover {
+    background-color: #4169e1;
+}
+
+@media only screen and (max-width: 800px) {
+    .form-inline {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .divider {
+        display: none;
+    }
+
+    .helpArea {
+        display: block;
+        width: 98%;
+    }
+
+    .navbar {
+        height: 3.2em;
+    }
+
+    .editArea {
+        width: 98%;
+    }
+
+    .helpArea {
+        margin-bottom: 3em;
+    }
+
+    h1 {
+        font-size: 2.1em;
+    }
+
+    p,
+    button,
+    label,
+    select,
+    input,
+    textarea,
+    li,
+    th,
+    td,
+    tr {
+        font-size: 1.2em;
+    }
+
+    th,
+    td,
+    tr {
+        font-size: 2.5vw;
+    }
+
+    .optionsDropdown .option {
+        display: block;
+        width: 100%;
+        margin-bottom: 2vh;
+    }
+
+    .optionsDropdown .option:last-child {
+        text-align: left;
+    }
+}
