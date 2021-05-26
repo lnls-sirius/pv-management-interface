@@ -79,23 +79,23 @@ async function getStatus(PV, msg) {
     }
 }
 
-async function resumePV(name) {
-    await applySingleAction("resumeArchivingPV", name);
-    await displayStatus(name, false, "Being archived");
+async function resumePV(pv) {
+    await applySingleAction("resumeArchivingPV", pv["pvName"]);
+    await displayStatus(pv["pvName"], false, "Being archived");
 
     Promise.resolve();
 }
 
-async function pausePV(name) {
-    await applySingleAction("pauseArchivingPV", name);
-    await displayStatus(name, false, "Paused");
+async function pausePV(pv) {
+    await applySingleAction("pauseArchivingPV", pv["pvName"]);
+    await displayStatus(pv["pvName"], false, "Paused");
 
     Promise.resolve();
 }
 
-async function archivePV(name) {
-    await applySingleAction("archivePV", name, "&samplingperiod=", samplingRate);
-    await displayStatus(name, false, ["Being archived", "Initial sampling", "Appliance assigned"]);
+async function archivePV(pv) {
+    await applySingleAction("archivePV", pv["pvName"], "&samplingperiod=", samplingRate);
+    await displayStatus(pv["pvName"], false, ["Being archived", "Initial sampling", "Appliance assigned"]);
 
     Promise.resolve();
 }

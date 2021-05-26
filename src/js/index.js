@@ -33,49 +33,43 @@ $(async function() {
     $("#action").html(options_str);
 });
 
-function filterEmpty(pv) {
-    return pv != "";
+function filterPVs(pvs, useNewline) {
+    let invalidChars = useNewline ? /[ \t\r]/g : /\s/g;
+    let splittingChar = useNewline ? /\r?\n/ : ",";
+
+    return[...new Set(pvs.replace(invalidChars, "").split(splittingChar))].filter((pv) => pv != "");
 }
 
 $("#applyPVchanges").on("click", async function() {
-    let oldpvs, newpvs;
-    if ($("#PVold").val().indexOf(",") >= 0) {
-        oldpvs = [...new Set($("#PVold").val().replace(/\s/g, "").split(","))].filter(filterEmpty);
-    } else {
-        oldpvs = [...new Set($("#PVold").val().replace(/[ \t\r]/g, "").split(/\r?\n/))].filter(filterEmpty);
-    }
-
+    let oldpvs = filterPVs($("#PVold").val(), $("#PVold").val().indexOf(",") < 0);
+    let pvs = [];
     let operation = $("#action")[0].value;
+    let processedPVs = 0;
 
     $("#applyPVchanges").prop("disabled", true);
     action.resetListedPVs();
 
     $(".lds-ellipsis").show();
     $(".progress").html("Fetching PV listing...");
-
-    let processedPVs = 0;
+    
     if (operation == "Rename") {
-        if ($("#PVnew").val().indexOf(",") >= 0) {
-            newpvs = [...new Set($("#PVnew").val().replace(/\s/g, "").split(","))].filter(filterEmpty);
-        } else {
-            newpvs = [...new Set($("#PVnew").val().replace(/ /g, "").split(/\r?\n/))].filter(filterEmpty);
-        }
+        pvs = filterPVs($("#PVnew").val(), $("#PVnew").val().indexOf(",") < 0);
 
         if (await action.getStatus(oldpvs[0]) === "Error") {
             ui.resetProgress();
             return;
         }
 
-        if (newpvs.length == oldpvs.length) {
+        if (pvs.length == oldpvs.length) {
             if ($("#PVold").val().indexOf("*") > -1 || $("#PVnew").val().indexOf("*") > -1) {
                 ui.displayMessage("When renaming PVs, avoid wildcards (* filter), as they select multiple PVs.");
             } else {
-                for (let i = 0; i < newpvs.length; i++) {
-                    if (oldpvs[i] == newpvs[i]) {
+                for (let i = 0; i < pvs.length; i++) {
+                    if (oldpvs[i] == pvs[i]) {
                         ui.displayMessage(`Invalid operation for ${oldpvs[i]}: New name matches old name.`);
                     } else {
                         $(".progress").html(`${++processedPVs} of ${oldpvs.length} PVs processed`);
-                        await action.renamePV(oldpvs[i], newpvs[i]);
+                        await action.renamePV(oldpvs[i], pvs[i]);
                     }
                 }
             }
@@ -91,7 +85,6 @@ $("#applyPVchanges").on("click", async function() {
                 return;
             }
         }
-        let pvs = [];
         let resultsBatch = [];
 
         for (let i = 0; i < oldpvs.length; i++) {
@@ -119,7 +112,7 @@ $("#applyPVchanges").on("click", async function() {
         if (operation == "Check Status") {
             processedPVs = pvs.length;
             actions[operation](pvs).then($(".progress").html(`${processedPVs} of ${pvs.length} PVs processed`));
-        } else if (operation == "Delete") {
+        } else {
             for (const pv of pvs) {
                 // Send all PV properties, in order to shave off time and reduce errors by checking states before applying operations
                 resultsBatch.push(actions[operation](pv));
@@ -130,25 +123,13 @@ $("#applyPVchanges").on("click", async function() {
                     resultsBatch = [];
                 }
             }
-        } else {
-            for (const pv of pvs) {
-                resultsBatch.push(actions[operation](pv["pvName"]));
-
-                if (resultsBatch.length > 6 || pvs.length - processedPVs < 6) {
-                    await Promise.all(resultsBatch);
-                    $(".progress").html(`${processedPVs += resultsBatch.length} of ${pvs.length} PVs processed`);
-                    resultsBatch = [];
-                }
-            }
         }
     }
 
-    if (!processedPVs) {
+    if (processedPVs < 1) {
         $(".progress").html("No valid PVs to process.");
-    } else {
-        if (processedPVs > 0 && processedPVs != oldpvs.length) {
-            $(".progress").html(`${oldpvs.length} of ${oldpvs.length} PVs processed`);
-        }
+    } else if (processedPVs != pvs.length) {
+        $(".progress").html(`${pvs.length} of ${pvs.length} PVs processed`);
     }
 
     $(".lds-ellipsis").hide();
