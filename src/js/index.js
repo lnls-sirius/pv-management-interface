@@ -14,8 +14,8 @@ let actions = {
     Archive: action.archivePV
 };
 
-// Runs once page finishes loading
-$(async function() {
+
+$(async function () {
     // The following workaround is to defeat the automatic "conversion" of functions by the web VPN
     if (window.location["protocol"] !== "https:" && window.location.host != "10.0.38.50") {
         ui.displayMessage("You are accessing this through HTTP. Redirecting to HTTPS...");
@@ -37,10 +37,10 @@ function filterPVs(pvs, useNewline) {
     let invalidChars = useNewline ? /[ \t\r]/g : /\s/g;
     let splittingChar = useNewline ? /\r?\n/ : ",";
 
-    return[...new Set(pvs.replace(invalidChars, "").split(splittingChar))].filter((pv) => pv != "");
+    return [...new Set(pvs.replace(invalidChars, "").split(splittingChar))].filter((pv) => pv != "");
 }
 
-$("#applyPVchanges").on("click", async function() {
+$("#applyPVchanges").on("click", async function () {
     let oldpvs = filterPVs($("#PVold").val(), $("#PVold").val().indexOf(",") < 0);
     let pvs = [];
     let operation = $("#action")[0].value;
@@ -51,7 +51,7 @@ $("#applyPVchanges").on("click", async function() {
 
     $(".lds-ellipsis").show();
     $(".progress").html("Fetching PV listing...");
-    
+
     if (operation == "Rename") {
         pvs = filterPVs($("#PVnew").val(), $("#PVnew").val().indexOf(",") < 0);
 
@@ -136,19 +136,19 @@ $("#applyPVchanges").on("click", async function() {
     $("#applyPVchanges").prop("disabled", false);
 });
 
-$("table").on("click", "tr", function() {
+$("table").on("click", "tr", function () {
     let pv = this.cells[0].textContent;
     if (pv != "PV Name") {
         window.open(`http://${action.baseUrl}/archiver-viewer/?pv=${pv}`);
     }
 });
 
-$("#chartPVs").on("click", async function() {
+$("#chartPVs").on("click", async function () {
     let pvs = action.listedPVs;
     window.open(`http://${action.baseUrl}/archiver-viewer/?pv=${pvs.join("&pv=")}`);
 });
 
-$("#log").on("click", function() {
+$("#log").on("click", function () {
     if (this.text == "Log out") {
         login.logout();
     } else {
@@ -156,11 +156,11 @@ $("#log").on("click", function() {
     }
 });
 
-$("#action").on("change", function() {
+$("#action").on("change", function () {
     $("#PVnew").toggle(this.value == "Rename");
 });
 
-$("#importCSV").on("change", function() {
+$("#importCSV").on("change", function () {
     if (!/^.+\.(csv)/.test(this.value)) {
         $("#importCSV").css("background-color", "#ff4d4d"); // Sets background color to red
         alert("Invalid file type. Please select a valid CSV file.");
@@ -171,8 +171,8 @@ $("#importCSV").on("change", function() {
         let oldpvs = "";
 
         Papa.parse(this.files[0], {
-            complete: function(results) {
-                results.data.forEach(function(pv) {
+            complete: function (results) {
+                results.data.forEach(function (pv) {
                     oldpvs += pv[0] ? "," + pv[0] : "";
                     newpvs += pv[1] ? "," + pv[1] : "";
                 });
@@ -183,11 +183,11 @@ $("#importCSV").on("change", function() {
     }
 });
 
-$(".openDropdown").on("click", function() {
+$(".openDropdown").on("click", function () {
     $(".optionsDropdown").toggle();
     $(".arrow").toggleClass("up");
 });
 
-$("#samplingRate").on("change", function(e) {
+$("#samplingRate").on("change", function (e) {
     action.setSRate(e.currentTarget.value);
 });

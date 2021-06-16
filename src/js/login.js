@@ -6,18 +6,18 @@ import $ from "jquery";
 async function queryUser() {
     try {
         await $.ajax({
-                url: `${actions.mgmtUrl}/mgmt/bpl/getLoginUsername`,
-                dataType: "json",
-                type: "get",
-                timeout: 3000
-            })
-            .then(function(data) {
+            url: `${actions.mgmtUrl}/mgmt/bpl/getLoginUsername`,
+            dataType: "json",
+            type: "get",
+            timeout: 3000
+        })
+            .then(function (data) {
                 if (data.username != null) {
                     $("#username").text(data.username);
                     $("#log").text("Log out");
                 }
             })
-            .fail(function() {
+            .fail(function () {
                 $("#user").text("You are currently not logged in");
                 ui.displayMessage("A connection error has occurred. Check if you're using HTTPS and connected.");
                 console.warn("Protocol:", location.protocol);
@@ -33,16 +33,16 @@ async function login() {
 
     try {
         await $.ajax({
-                url: `${actions.mgmtUrl}/mgmt/bpl/login`,
-                dataType: "json",
-                timeout: 3000,
-                type: "post",
-                data: {
-                    username: encodeURIComponent(username),
-                    password: encodeURIComponent(password)
-                }
-            })
-            .then(function(data) {
+            url: `${actions.mgmtUrl}/mgmt/bpl/login`,
+            dataType: "json",
+            timeout: 3000,
+            type: "post",
+            data: {
+                username: encodeURIComponent(username),
+                password: encodeURIComponent(password)
+            }
+        })
+            .then(function (data) {
                 if (data.validate == "authenticated") {
                     window.location = "index.html";
                 } else {
@@ -54,7 +54,7 @@ async function login() {
                     }
                 }
             })
-            .fail(function(jqXHR, textStatus) {
+            .fail(function (jqXHR, textStatus) {
                 ui.displayMessage(`An error occured on the server while logging in: ${textStatus}. Check your connection`);
             });
     } catch (err) {
@@ -62,28 +62,28 @@ async function login() {
     }
 }
 
-$("#login").on("click", function() {
+$("#login").on("click", function () {
     login();
 });
 
-$("#pass, #user").on("keypress", function(e) {
+$("#pass, #user").on("keypress", function (e) {
     if (e.key === "Enter") login();
 });
 
 async function logout() {
     try {
         await $.ajax({
-                url: `${actions.mgmtUrl}/mgmt/bpl/logout`,
-                dataType: "json",
-                type: "get",
-            })
-            .then(function(data) {
+            url: `${actions.mgmtUrl}/mgmt/bpl/logout`,
+            dataType: "json",
+            type: "get",
+        })
+            .then(function (data) {
                 if (data.username != null && data.username != undefined) {
                     $("#username").text("You are currently not logged in.");
                     $("#log").text("Log in");
                 }
             })
-            .fail(function(jqXHR, textStatus) {
+            .fail(function (jqXHR, textStatus) {
                 ui.displayMessage(`An error occured on the server while logging out: ${textStatus}. Check your connection`);
             });
     } catch (err) {

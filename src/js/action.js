@@ -44,12 +44,12 @@ async function applySingleAction(action, PVs, secondaryAction, secondaryParam) {
 
     try {
         await $.ajax({
-                url: `${mgmtUrl}/mgmt/bpl/${action}?pv=${encodeURIComponent(PVs)}${secondary}`,
-                dataType: "json",
-                timeout: 15000,
-                type: "get"
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
+            url: `${mgmtUrl}/mgmt/bpl/${action}?pv=${encodeURIComponent(PVs)}${secondary}`,
+            dataType: "json",
+            timeout: 15000,
+            type: "get"
+        })
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
             });
     } catch (err) {
@@ -61,12 +61,12 @@ async function applySingleAction(action, PVs, secondaryAction, secondaryParam) {
 async function getStatus(PV, msg) {
     try {
         const ajaxResult = await $.ajax({
-                url: `${mgmtUrl}/mgmt/bpl/getPVStatus?pv=${encodeURI(PV)}&reporttype=short`,
-                dataType: "json",
-                timeout: 10000,
-                type: "get"
-            })
-            .fail(function(jqXHR) {
+            url: `${mgmtUrl}/mgmt/bpl/getPVStatus?pv=${encodeURI(PV)}&reporttype=short`,
+            dataType: "json",
+            timeout: 10000,
+            type: "get"
+        })
+            .fail(function (jqXHR) {
                 if (msg) {
                     ui.displayMessage(`An error occured for ${PV}: ${statusCodeTxt[jqXHR.status]}`);
                 }
@@ -120,13 +120,12 @@ async function displayStatus(name, msg, expected) {
     }
     if (!Array.isArray(expected) && expected !== undefined) expected = [expected];
 
-    PVs.forEach(function(PV) {
+    PVs.forEach(function (PV) {
         if (expected !== undefined && !expected.includes(PV["status"])) {
-            if ($("#log").text() === "Log in") {
+            if ($("#log").text() === "Log in")
                 ui.displayMessage(`Error for PV ${PV["pvName"]}. Check if you're logged in.`);
-            } else {
+            else
                 ui.displayMessage(`Error for PV ${PV["pvName"]}. Check if the PV exists.`);
-            }
         }
 
         $("#pvTable").append(`<tr>
@@ -134,7 +133,7 @@ async function displayStatus(name, msg, expected) {
         <td>${PV["status"] || "Unavailable"}</td>
         <td>${PV["lastEvent"] || "Unavailable"}</td>
         <td>${PV["appliance"] || "Unavailable"}</td>
-        <td>${PV["connectionState"] ? "Connected" : "Disconnected"}</td>
+        <td>${PV["connectionState"] == "true" ? "Connected" : "Disconnected"}</td>
         </tr>`);
 
         listedPVs.push(PV["pvName"]);
